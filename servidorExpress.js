@@ -15,14 +15,20 @@ function validarUsuario(req, res, next) {
 /* ---------------------MIDDLEWARES-------------------*/
 
 //server.use(validarUsuario); // comento porque afecta a todas las rutas
-
+server.use(express.static('public')) //asigno ruta para archivos estaticos
 /* ---------------------RUTAS-------------------*/
 server.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
 server.get('/panel', [validarUsuario], (req, res) => {
-  res.send('Bienvenido al panel')
+
+	try {
+		res.send('Bienvenido al panel')
+	} catch (error){
+		res.status(500).send('Ocurrio un error en el panel..')
+	}
+    
 })
 
 server.get('/buscarUsuario', (req, res) => {
