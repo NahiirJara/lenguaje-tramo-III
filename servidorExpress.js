@@ -2,15 +2,35 @@ const express = require('express')
 const server = express()
 const port = 3000
 
+/* ---------------------FUNCIONES-------------------*/
+function validarUsuario(req, res, next) {
+	const usuarioValido = true; //cambiar este valor si el usuario es valido o no
+	if (usuarioValido) {
+		next();
+	}else{
+		res.status(401).send('El usuario no es válido') 
+	}
+}
+
+/* ---------------------MIDDLEWARES-------------------*/
+
+//server.use(validarUsuario); // comento porque afecta a todas las rutas
+
+/* ---------------------RUTAS-------------------*/
 server.get('/', (req, res) => {
   res.send('Hello World!')
+})
+
+server.get('/panel', [validarUsuario], (req, res) => {
+  res.send('Bienvenido al panel')
 })
 
 server.get('/buscarUsuario', (req, res) => {
   const encontrado = true
 
   if (encontrado) {
-    res.status(200).send('Status 200: El usuario fué encontrado');
+    //no s ele pone el status porque por defecto es 200
+    res.send('Status 200: El usuario fué encontrado');
   } else {
     res.status(404).send('Status 404: No se encontró el usuario');
   }
