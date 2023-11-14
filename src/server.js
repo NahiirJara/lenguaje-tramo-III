@@ -4,7 +4,6 @@ const express = require('express')
 const usuarioRouter = require ('./routes/UsuariosRoutes.js')
 
 const app = express()
-
 const port = 3000
 
 app.use(usuarioRouter)
